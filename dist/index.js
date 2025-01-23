@@ -27591,7 +27591,7 @@ async function callEndpoint() {
   };
 
   return new Promise((resolve, reject) => {
-    const req = https.request(`${BASE_URL}/api/eval`, options, (res) => {
+    const req = https.request(`${BASE_URL}/api/evals/git`, options, (res) => {
       let data = '';
 
       // Handle stream data
