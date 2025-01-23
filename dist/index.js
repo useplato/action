@@ -27575,19 +27575,22 @@ const branch = branchRef.replace('refs/heads/', ''); // Extract "main"
 const GIT_BRANCH = branch;
 const GIT_COMMIT_HASH = process.env.GITHUB_SHA;
 
+const body = JSON.stringify({
+  test_case_set_id: TEST_CASE_SET_ID,
+  git_repo_url: GIT_REPO_URL,
+  git_branch: GIT_BRANCH,
+  git_commit_hash: GIT_COMMIT_HASH,
+});
+
 async function callEndpoint() {
   const options = {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${API_KEY}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
     },
-    body: JSON.stringify({
-      test_case_set_id: TEST_CASE_SET_ID,
-      git_repo_url: GIT_REPO_URL,
-      git_branch: GIT_BRANCH,
-      git_commit_hash: GIT_COMMIT_HASH,
-    })
+    body,
   };
 
   return new Promise((resolve, reject) => {
@@ -27624,6 +27627,7 @@ async function callEndpoint() {
       reject(new Error(`Request failed: ${error.message}`));
     });
 
+    req.write(body);
     req.end();
   });
 }
