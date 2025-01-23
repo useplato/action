@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  workflow_call:
+    inputs:
+      api-key:
+        required: true
+        type: string
+        description: "Plato API key"
+      base-url:
+        required: false
+        type: string
+        description: "Base URL for the server"
+        default: "https://plato.so"
+      test-case-set-id:
+        required: true
+        type: number
+        description: "Test case set ID"
+
+
+jobs:
+  call-endpoint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Run Plato Evals
+      env:
+        API_KEY: ${{ inputs.api-key }}
+        BASE_URL: ${{ inputs.base-url }}
+        TEST_CASE_SET_ID: ${{ inputs.test-case-set-id }}
+
+        GIT_REPO: ${{ github.repository }}
+        GIT_COMMIT_HASH: ${{ github.event.pull_request.head.sha }}
+        GIT_BRANCH: ${{ github.ref_name }}
+        GIT_CLONE_URL: ${{ github.event.pull_request.head.repo.clone_url }}
+      run: node scripts/runEvals.js
+

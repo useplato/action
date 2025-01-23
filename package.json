@@ -1,0 +1,17 @@
+{
+  "name": "plato-eval-actions",
+  "version": "1.0.0",
+  "description": "GitHub Actions for Plato Evals",
+  "main": "index.js",
+  "repository": "https://github.com/useplato/actions",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
