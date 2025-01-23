@@ -37,9 +37,9 @@ jobs:
 
     - name: Run Plato Evals
       env:
-        API_KEY: ${{ inputs.api-key }}
-        BASE_URL: ${{ inputs.base-url }}
-        TEST_CASE_SET_ID: ${{ inputs.test-case-set-id }}
+        API_KEY: ${{ github.event.inputs.api-key }}
+        BASE_URL: ${{ github.event.inputs.base-url }}
+        TEST_CASE_SET_ID: ${{ github.event.inputs.test-case-set-id }}
 
         GIT_REPO: ${{ github.repository }}
         GIT_COMMIT_HASH: ${{ github.event.pull_request.head.sha }}
