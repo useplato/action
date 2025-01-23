@@ -27568,6 +27568,7 @@ const TEST_CASE_SET_ID = core.getInput('test-case-set-id');
 // git_branch: str
 // git_commit_hash: str
 
+const repository = process.env.GITHUB_REPOSITORY;
 const GIT_REPO_URL = `https://github.com/${repository}.git`;
 const branchRef = process.env.GITHUB_REF; // e.g., "refs/heads/main"
 const branch = branchRef.replace('refs/heads/', ''); // Extract "main"
