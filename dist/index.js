@@ -35880,8 +35880,10 @@ const TEST_CASE_SET_ID = core.getInput('test-case-set-id');
 
 const repository = process.env.GITHUB_REPOSITORY;
 const GIT_REPO_URL = `https://github.com/${repository}.git`;
-const GIT_BRANCH = process.env.GITHUB_REF.replace('refs/heads/', '');
+const GIT_BRANCH = process.env.HEAD_REF;
 const GIT_COMMIT_HASH = process.env.GITHUB_SHA;
+
+console.log(process.env)
 
 async function callEndpoint() {
 
