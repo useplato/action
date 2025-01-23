@@ -17,6 +17,16 @@ const GIT_BRANCH = process.env.GITHUB_REF.replace('refs/heads/', '');
 const GIT_COMMIT_HASH = process.env.GITHUB_SHA;
 
 async function callEndpoint() {
+
+  const body = {
+    test_case_set_id: TEST_CASE_SET_ID,
+    git_repo_url: GIT_REPO_URL,
+    git_branch: GIT_BRANCH,
+    git_commit_hash: GIT_COMMIT_HASH,
+  };
+
+  console.log('Body:', body);
+
   try {
     const response = await axios({
       method: 'POST',
@@ -25,12 +35,7 @@ async function callEndpoint() {
         'Authorization': `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
       },
-      data: {
-        test_case_set_id: TEST_CASE_SET_ID,
-        git_repo_url: GIT_REPO_URL,
-        git_branch: GIT_BRANCH,
-        git_commit_hash: GIT_COMMIT_HASH,
-      }
+      data: body,
     });
 
     console.log('Success:', response.data);
