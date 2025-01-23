@@ -27588,7 +27588,7 @@ async function callEndpoint() {
     headers: {
       'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(body),
+      'Content-Length': body.length,
     },
     body,
   };
