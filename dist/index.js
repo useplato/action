@@ -35883,8 +35883,6 @@ const GIT_REPO_URL = `https://github.com/${repository}.git`;
 const GIT_BRANCH = process.env.GITHUB_HEAD_REF;
 const GIT_COMMIT_HASH = process.env.GITHUB_SHA;
 
-console.log(process.env)
-
 async function callEndpoint() {
 
   const body = {
@@ -35893,8 +35891,6 @@ async function callEndpoint() {
     git_branch: GIT_BRANCH,
     git_commit_hash: GIT_COMMIT_HASH,
   };
-
-  console.log('Body:', body);
 
   try {
     const response = await axios({
