@@ -52,6 +52,17 @@ async function callEndpoint() {
 
     core.summary.addRaw(JSON.stringify(result, null, 2));
 
+    // Add a more detailed summary
+    await core.summary
+      .addHeading('Plato Test Results')
+      .addTable([
+        [{data: 'Metric', header: true}, {data: 'Value', header: true}],
+        ['Batch URL', result.batchUrl],
+        ['Batch ID', result.batchId],
+        ['Session IDs', result.sessionIds.join(', ')]
+      ])
+      .write();
+
     process.exit(0);
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
