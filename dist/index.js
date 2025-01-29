@@ -35930,6 +35930,21 @@ async function callEndpoint() {
       ])
       .write();
 
+    // Add a comment to the pull request if this is a PR
+    if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
+      const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+      const context = github.context;
+
+      await octokit.rest.issues.createComment({
+        ...context.repo,
+        issue_number: context.payload.pull_request.number,
+        body: `### Plato Test Results
+- [View Results](${result.batchUrl})
+- Batch ID: ${result.batchId}
+- Session IDs: ${result.sessionIds.join(', ')}`
+      });
+    }
+
     process.exit(0);
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
