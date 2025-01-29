@@ -35867,6 +35867,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 var __webpack_exports__ = {};
 const axios = __nccwpck_require__(7269);
 const core = __nccwpck_require__(7484);
+const fs = __nccwpck_require__(9896);
 
 const BASE_URL = core.getInput('base-url');
 const API_KEY = core.getInput('api-key');
@@ -35904,6 +35905,20 @@ async function callEndpoint() {
     });
 
     console.log('Success:', response.data);
+
+    const result = {
+      batchUrl: `${BASE_URL}/sessions?run_session_batch_ids=${response.data.batch_id}`,
+      batchId: response.data.batch_id,
+      sessionIds: response.data.session_ids,
+    }
+
+    // Set the outputs for GitHub Actions
+    core.setOutput('batch-url', result.batchUrl);
+    core.setOutput('batch-id', result.batchId);
+    core.setOutput('session-ids', result.sessionIds);
+
+    core.summary.addRaw(JSON.stringify(result, null, 2));
+
     process.exit(0);
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const core = require('@actions/core');
+const fs = require('fs');
 
 const BASE_URL = core.getInput('base-url');
 const API_KEY = core.getInput('api-key');
@@ -37,6 +38,20 @@ async function callEndpoint() {
     });
 
     console.log('Success:', response.data);
+
+    const result = {
+      batchUrl: `${BASE_URL}/sessions?run_session_batch_ids=${response.data.batch_id}`,
+      batchId: response.data.batch_id,
+      sessionIds: response.data.session_ids,
+    }
+
+    // Set the outputs for GitHub Actions
+    core.setOutput('batch-url', result.batchUrl);
+    core.setOutput('batch-id', result.batchId);
+    core.setOutput('session-ids', result.sessionIds);
+
+    core.summary.addRaw(JSON.stringify(result, null, 2));
+
     process.exit(0);
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);

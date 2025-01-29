@@ -18,3 +18,13 @@ inputs:
 runs:
   using: "node20"
   main: "dist/index.js"
+outputs:
+  batch-url:
+    description: "URL to view the batch results"
+    value: ${{ steps.plato.outputs.batchUrl }}
+  batch-id:
+    description: "ID of the batch run"
+    value: ${{ steps.plato.outputs.batchId }}
+  session-ids:
+    description: "IDs of the individual test sessions"
+    value: ${{ steps.plato.outputs.sessionIds }}
